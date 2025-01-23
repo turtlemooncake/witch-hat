@@ -1,3 +1,4 @@
 function startGame() {
-    console.log("Started game!");
+    document.getElementById("start-container").style.display = 'none';
+    document.getElementById("game-container").style.display = 'block';
 }
