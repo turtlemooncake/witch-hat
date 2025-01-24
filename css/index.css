@@ -52,3 +52,7 @@ body, html {
     margin-top: 1em;
     font-family: "Garamond";
 }
+
+#game-container {
+    display: none;
+}
