@@ -1,4 +1,12 @@
-var story = {};
+var story = {
+    1: {
+        title: "You are on a journey to save the princess. Which path do you choose?",
+        choices: {
+            0: ["Forest road", 2],
+            1: ["Mountain road", 3]
+        }
+    }
+};
 var endings = {
     "adventure": 0,
     "romance": 0,
@@ -10,11 +18,23 @@ var endings = {
 };
 var state = 0;
 function renderState(state) {
+    if (state == 0) {
+        return;
+    }
     // Select Relevant HTML Elements
-    var gameContainer = document.getElementById('game-choices');
-    var gameImage = document.getElementById('game-img');
-    // const mainImg = document.getElementById('game-img') as HTMLImageElement;
-    // mainImg.src = "assets/test-game.png"
+    var gameChoicesContainer = document.getElementById('game-choices');
+    var gameImageElement = document.getElementById('game-img');
+    // Page Title
+    var pageTitle = document.getElementById('page-title');
+    pageTitle.innerHTML = story[state].title;
+    // Choices 
+    var pageChoices = Object.values(story[state].choices);
+    pageChoices.forEach(function (choicePair) {
+        var choiceButton = document.createElement('button');
+        choiceButton.textContent = choicePair[0];
+        choiceButton.className = 'game-choice-button';
+        gameChoicesContainer.appendChild(choiceButton);
+    });
     // const button = document.createElement('button');
     // button.textContent = "test"; 
     // button.className = "game-choice-button";
@@ -32,7 +52,7 @@ function startGame() {
     //document.getElementById('start-container')!.style.display = 'none';
     //document.getElementById('game-container')!.style.display = 'flex';
     document.getElementById('start-button').style.display = 'none';
-    renderState(state);
+    renderState(++state);
 }
 window.onload = function () {
     renderState(state);

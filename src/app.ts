@@ -1,5 +1,12 @@
-const story = {
 
+const story : any = {
+    1: {
+        title: "You are on a journey to save the princess. Which path do you choose?",
+        choices: {
+            0: ["Forest road", 2],
+            1: ["Mountain road", 3]
+        }
+    }
 }
 
 const endings = {
@@ -12,15 +19,28 @@ const endings = {
     "100-percent" : 0,
 }
 
-let state = 0;
+let state : number = 0;
 
 function renderState(state: number): void {
+    if (state == 0) {
+        return;
+    }
     // Select Relevant HTML Elements
-    const gameContainer = document.getElementById('game-choices');
-    const gameImage = document.getElementById('game-img') as HTMLImageElement; 
+    const gameChoicesContainer = document.getElementById('game-choices');
+    const gameImageElement = document.getElementById('game-img') as HTMLImageElement; 
+    
+    // Page Title
+    const pageTitle = document.getElementById('page-title'); 
+    pageTitle!.innerHTML = story[state].title;
 
-    // const mainImg = document.getElementById('game-img') as HTMLImageElement;
-    // mainImg.src = "assets/test-game.png"
+    // Choices 
+    const pageChoices: [string, number][] = (<any>Object).values(story[state].choices);
+    pageChoices.forEach((choicePair) => {
+        const choiceButton = document.createElement('button');
+        choiceButton.textContent = choicePair[0];
+        choiceButton.className = 'game-choice-button';
+        gameChoicesContainer!.appendChild(choiceButton);
+    });
 
     // const button = document.createElement('button');
     // button.textContent = "test"; 
@@ -43,7 +63,7 @@ function startGame(): void {
     //document.getElementById('start-container')!.style.display = 'none';
     //document.getElementById('game-container')!.style.display = 'flex';
     document.getElementById('start-button')!.style.display = 'none'; 
-    renderState(state); 
+    renderState(++state); 
 }
 
 window.onload = () => {
